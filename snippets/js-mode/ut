@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: useTranslation
+# key: ut
+# --
+const { t } = useTranslation();

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: void function type
+# key: fnv
+# --
+($1) => void$0

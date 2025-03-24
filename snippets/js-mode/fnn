@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: fnn: arrow function with body
+# key: fnn
+# --
+($1) => {
+  $0
+}

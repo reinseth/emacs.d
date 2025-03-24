@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: fn: arrow function
+# key: fn
+# --
+
+($1) => $0

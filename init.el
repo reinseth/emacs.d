@@ -1,0 +1,38 @@
+(with-eval-after-load 'package
+  (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t))
+
+(setq settings-dir (expand-file-name "settings" user-emacs-directory))
+(add-to-list 'load-path settings-dir)
+
+(require 'setup-modus-themes)
+
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file)
+
+(require 'setup-defaults)
+(require 'setup-appearance)
+(require 'setup-editing)
+(require 'setup-completions)
+(require 'setup-keybindings)
+(require 'setup-search-replace)
+(require 'setup-window)
+
+(require 'setup-apheleia)
+(require 'setup-breadcrumb-mode)
+(require 'setup-clojure)
+(require 'setup-combobulate)
+(require 'setup-dired)
+(require 'setup-editorconfig)
+(require 'setup-eglot)
+(require 'setup-elfeed)
+(require 'setup-flymake)
+(require 'setup-git)
+(require 'setup-gptel)
+(require 'setup-hippie)
+(require 'setup-lua-mode)
+(require 'setup-paredit)
+(require 'setup-racket-mode)
+(require 'setup-scratch)
+(require 'setup-text)
+(require 'setup-treesitter)
+(require 'setup-web)
