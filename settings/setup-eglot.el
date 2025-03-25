@@ -1,9 +1,9 @@
 (use-package eglot
   :bind
   (:map eglot-mode-map
-        ("C-c r" . eglot-rename)
-        ("C-c C-c" . eglot-code-actions)
-        ("C-c o" . eglot-code-action-organize-imports)
+        ("s-l r" . eglot-rename)
+        ("s-l a" . eglot-code-actions)
+        ("s-l o" . eglot-code-action-organize-imports)
         ("M-s M-o" . consult-eglot-symbols))
   :config
   ;; The following is necessary to get flymake-eslint to work with eglot
