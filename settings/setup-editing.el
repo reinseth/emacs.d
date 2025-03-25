@@ -32,7 +32,9 @@
          :map
          isearch-mode-map
          ;; ("s-j" . avy-isearch)
-         ("M-j" . avy-isearch)))
+         ("M-j" . avy-isearch))
+  :config
+  (add-to-list 'avy-dispatch-alist '(?Y . my/avy-action-yank-line)))
 
 (use-package expand-region
   :ensure t
@@ -63,5 +65,13 @@
 (use-package embrace
   :ensure t
   :bind (("s-\`" . embrace-commander)))
+
+(defun my/avy-action-yank-line (pt)
+  (let ((avy-command 'avy-goto-line))
+    (save-excursion
+      (goto-char pt)
+      (back-to-indentation)
+      (avy-action-copy (point)))))
+
 
 (provide 'setup-editing)
