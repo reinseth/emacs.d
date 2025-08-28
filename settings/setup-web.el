@@ -1,3 +1,5 @@
+(save-some-buffers-root)
+
 (use-package sgml-mode
   :hook (sgml-mode . my/setup-html-mode))
 
@@ -9,6 +11,8 @@
 
 (use-package emmet-mode
   :ensure t
+  :bind (:map emmet-mode-keymap
+              ("C-j" . nil))
   :hook (sgml-mode css-mode tsx-ts-mode))
 
 (use-package add-node-modules-path
@@ -30,11 +34,11 @@
   :config
   (add-hook 'tsx-ts-mode-hook #'my/setup-tsx-mode))
 
-(defvar my/ts-other-file-alist
-  '(("\\.test\\.ts$" (".ts" ".tsx"))
-    ("\\.test\\.tsx$" (".tsx" ".ts"))
-    ("\\.ts$" (".test.ts"))
-    ("\\.tsx$" (".test.tsx" ".test.ts"))))
+(straight-use-package
+ '(vite-test-mode
+   :type git
+   :host github
+   :repo "chrishowejones/vite-test-mode"))
 
 (defun my/setup-html-mode ()
   (sgml-electric-tag-pair-mode 1)
@@ -53,10 +57,23 @@
   (eglot-ensure))
 
 (defun my/setup-ts-base (mode-map)
-  (setq ff-other-file-alist #'my/ts-other-file-alist)
+  (with-significant-others f
+    ("\\.test\\.ts$" (list
+                      (s-replace ".test.ts" ".ts" f)
+                      (s-replace ".test.ts" ".tsx" f)))
+    ("\\.test\\.tsx$" (list
+                       (s-replace ".test.tsx" ".tsx" f)
+                       (s-replace ".test.tsx" ".ts" f)))
+    ("\\.ts$" (list
+               (s-replace ".ts" ".test.ts" f)
+               (s-replace ".ts" ".test.tsx" f)))
+    ("\\.tsx$" (list
+                (s-replace ".tsx" ".test.tsx" f)
+                (s-replace ".tsx" ".test.ts" f))))
   (electric-pair-mode 1)
   (hs-minor-mode 1)
   (apheleia-mode 1)
+  (vite-test-mode 1)
   (breadcrumb-local-mode 1)
   (add-node-modules-path)
   (flymake-eslint-enable)
@@ -80,6 +97,7 @@
   (setq jtsx-enable-jsx-element-tags-auto-sync t)
   (setq-local forward-sexp-function 'jtsx-forward-sexp)
   (keymap-local-set "<remap> <comment-dwim>" 'jtsx-comment-dwim)
+  (keymap-local-set "<remap> <comment-line>" 'jtsx-comment-line)
   (add-hook 'pre-command-hook 'jtsx-save-buffer-chars-modified-tick nil t)
   (add-hook 'post-command-hook 'jtsx-synchronize-jsx-element-tags -1 t)
   (add-to-list 'hs-special-modes-alist

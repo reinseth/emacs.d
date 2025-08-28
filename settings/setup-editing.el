@@ -24,34 +24,29 @@
   :bind ("M-`" . goto-last-change))
 
 ;; Avy: quickly jump to char sequence anywhere on the visible screen
+;; Especially useful for jumping to entries matched by C-s (isearch)
 (use-package avy
   :ensure t
-  :bind (("C-c j" . avy-goto-line)
-         ;; ("s-j"   . avy-goto-char-timer)
-         ("M-j"   . avy-goto-char-timer)
+  :bind (("M-j"   . avy-goto-char-timer)
          :map
          isearch-mode-map
-         ;; ("s-j" . avy-isearch)
          ("M-j" . avy-isearch))
   :config
   (add-to-list 'avy-dispatch-alist '(?Y . my/avy-action-yank-line)))
 
 (use-package expand-region
   :ensure t
-  :bind (("C-;" . er/expand-region)
-         ("C-:" . er/contract-region))
+  :bind (("C-j" . er/expand-region)
+         ("C-S-j" . er/contract-region))
   :config
-  (setq expand-region-contract-fast-key ":"))
+  (setq expand-region-fast-keys-enabled nil))
 
 (use-package multiple-cursors
   :ensure t
-  :bind (("M-'" . mc/mark-all-dwim)
-         ("C-'" . mc/mark-next-like-this)
-         ("C-S-c C-S-c" . mc/edit-lines)
-         :map mc/keymap
-         ("C-'" . mc/mark-next-like-this)
-         ("<return>" . nil)
-         ("C-\"" . mc/skip-to-next-like-this))
+  :bind (("s-j" . mc/mark-next-like-this)
+         ("S-s-j" . mc/skip-to-next-like-this)
+         ("M-s-j" . mc/mark-all-dwim)
+         ("C-S-c C-S-c" . mc/edit-lines))
   :config
   (multiple-cursors-mode 1)
   (setq mc/insert-numbers-default 1))
@@ -66,12 +61,15 @@
   :ensure t
   :bind (("s-\`" . embrace-commander)))
 
+(use-package surround
+  :ensure t
+  :bind-keymap ("s-\`" . surround-keymap))
+
 (defun my/avy-action-yank-line (pt)
   (let ((avy-command 'avy-goto-line))
     (save-excursion
       (goto-char pt)
       (back-to-indentation)
       (avy-action-copy (point)))))
-
 
 (provide 'setup-editing)

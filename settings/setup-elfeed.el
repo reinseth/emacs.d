@@ -1,15 +1,31 @@
-(defun gar/reading-mode-hook ()
+(defun my/reading-mode-hook  (buf)
+  (switch-to-buffer buf)
   (visual-line-mode 1)
-  (setq shr-width 100)
-  (setq olivetti-body-width 200)
+  (setq-local olivetti-body-width 100)
   (olivetti-mode 1)
-  )
+  ;; (my/hide-cursor)
+  (elfeed-show-refresh))
+
+;; Source: https://jiewawa.me/2024/10/useful-emacs-commands-for-reading/
+(defun my/hide-cursor ()
+  (hl-line-mode 0)
+  (setq-local cursor-type nil))
+
+(defun my/show-cursor ()
+  (hl-line-mode 1)
+  (kill-local-variable 'cursor-type))
+
+(defun my/toggle-cursor ()
+  (interactive)
+  (if (null cursor-type)
+      (my/show-cursor)
+    (my/hide-cursor)))
 
 (use-package elfeed
   :ensure t
   :bind ("s-w" . elfeed)
-  ;;:hook ((elfeed-show-mode . #'gar/reading-mode-hook))
   :config
+  (setq elfeed-show-entry-switch #'my/reading-mode-hook)
   (setq elfeed-feeds
         '(
           ;; Web
@@ -41,7 +57,8 @@
           ("http://blog.cleancoder.com/atom.xml" dev clojure java) ; Uncle Bob
           ("https://thomascothran.tech/index.xml" dev clojure) ; Thomas Cothran, got some good insights on REST and the lack thereof
           ("https://tonsky.me/blog/atom.xml" dev clojure) ; Tonsky, author of FiraCode
-          ("https://blog.agical.se/en/index.html" dev clojure) ; Agiacal, where Pez, aka Peter Strömberg works, author of Calva
+          ("https://blog.agical.se/en/index.html" dev clojure) ; Agiacal, where Pez aka Peter Strömberg works (author of Calva)
+          ("https://sophiebos.io" dev clojure) ; Sopie Bosio, works for Ardoq
 
           ;; Dev - js/ts/css
           ("https://infrequently.org/feed/" dev js) ; Alex Russel
@@ -70,5 +87,12 @@
 
           ;; Comics
           ("https://xkcd.com/atom.xml" comics))))
+
+(use-package elfeed-org
+  :ensure t
+  :custom
+  (rmh-elfeed-org-files (list "~/org/elfeed.org"))
+  :config
+  (elfeed-org))
 
 (provide 'setup-elfeed)

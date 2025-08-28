@@ -4,6 +4,7 @@
 (setq mc/cmds-to-run-for-all
       '(
         backward-sexp
+        capitalize-dwim
         cljr-raise-sexp
         cljr-slash
         cljr-splice-sexp-killing-backward
@@ -16,9 +17,11 @@
         combobulate-navigate-down
         combobulate-navigate-up
         combobulate-splice-up
+        combobulate-tsx-envelope-wrap-parentheses
         combobulate-typescript-envelope-wrap-parentheses
         completion-at-point
         consult-yank-pop
+        copy-rectangle-as-kill
         corfu-complete
         corfu-next
         crux-kill-whole-line
@@ -29,10 +32,13 @@
         dabbrev-expand
         default-indent-new-line
         delete-indentation
+        diff-hl-show-hunk
         down-list
         downcase-dwim
         electric-newline-and-maybe-indent
         embrace-change
+        embrace-commander
+        end-of-visual-line
         forward-sexp
         gar-to-dash-case
         hippie-expand-no-case-fold
@@ -40,14 +46,21 @@
         kill-region
         kill-region-or-backward-word
         kill-sexp
+        kill-visual-line
         mark-sexp
         markdown-outdent-or-delete
         mc/mark-next-lines
         mc/mark-previous-lines
         mc/skip-next-like-this
         my-insert-recangle-push-lines
+        my/kill-region-or-backward-word
+        org-cycle
+        org-delete-char
+        org-end-of-line
+        org-meta-return
         org-self-insert-command
         org-shiftmetaright
+        org-yank
         paredit-C-j
         paredit-backward
         paredit-backward-kill-word
@@ -64,9 +77,11 @@
         paredit-forward-up
         paredit-kill
         paredit-kill-region-or-backward-word
+        paredit-open-curly
         paredit-open-round
         paredit-open-square
         paredit-raise-sexp
+        paredit-semicolon
         paredit-splice-sexp
         paredit-splice-sexp-killing-backward
         paredit-wrap-curly
@@ -85,13 +100,17 @@
         consult-buffer
         describe-key
         electric-pair-delete-pair
+        global-subword-mode
         lsp-signature-stop
         mc--insert-number-and-increase
         mc/skip-top-next-like-this
         mouse-drag-mode-line
         mouse-select-window
         mouse-set-region
+        multiple-cursors-mode
+        occur
         pixel-scroll-precision
         redraw-display
         wgrep-finish-edit
+        yank-rectangle
         ))

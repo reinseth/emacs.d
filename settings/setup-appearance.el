@@ -6,6 +6,11 @@
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (if (fboundp 'horizontal-scroll-bar-mode) (horizontal-scroll-bar-mode -1))
 
+;; Turn off window bar
+;; (add-to-list 'default-frame-alist '(undecorated . t))
+;; (add-to-list 'default-frame-alist '(drag-internal-border . t))
+;; (add-to-list 'default-frame-alist '(internal-border-width . 4))
+
 ;; Disable splash/startup screen
 (setq inhibit-startup-screen t)
 (setq inhibit-splash-screen t)
@@ -40,7 +45,6 @@
 (setq frame-resize-pixelwise t)
 
 ;; Display line numbers in programming mode
-(add-hook 'prog-mode-hook 'display-line-numbers-mode)
 (setopt display-line-numbers-width 3)
 
 ;; Nice line wrapping when working with text
@@ -55,6 +59,9 @@
   (custom-theme-save))
 
 (use-package doom-themes
+  :defer t)
+
+(use-package ef-themes
   :defer t)
 
 (use-package doom-modeline

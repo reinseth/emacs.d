@@ -14,4 +14,14 @@
 (use-package consult-eglot
   :ensure t)
 
+;; eglot doesn't know how to follow definitions to files inside jar files.
+;; jarchive, though, will handle the jar urls and unzip and load the file.
+;; See:
+;; - https://github.com/joaotavora/eglot/issues/661
+;; - https://sr.ht/~dannyfreeman/jarchive/#working-with-eglot
+(use-package jarchive
+  :ensure t
+  :config
+  (jarchive-mode))
+
 (provide 'setup-eglot)

@@ -7,8 +7,8 @@
 ;; Enhanced window navigation
 (use-package ace-window
   :ensure t
-  :bind (("M-o" . ace-window)
-         ("M-O" . aw-flip-window))
+  :bind (("M-O" . ace-window)
+         ("M-o" . aw-flip-window))
   :config
   (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
 

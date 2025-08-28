@@ -1,7 +1,8 @@
 (use-package crux
   :ensure t)
 
-;; Paste rectangle as normal region (pushing existing content instead of interleaving)
+;; Paste rectangle as normal region, pushing the existing content instead of interleaving.
+;; (as opposed to yank-rectangle, which is bound to C-x r y)
 (global-set-key (kbd "C-x r C-y") #'my/insert-recangle-push-lines)
 
 ;; Kill word or selected region
@@ -37,6 +38,7 @@
 
 ;; Join lines - M-^ is built in and joins with the previous line, the following joins the next line with this
 (global-set-key (kbd "C-^") 'crux-top-join-line)
+(global-set-key (kbd "M-J") 'crux-top-join-line)
 
 ;; Cleanup and reindent buffer
 (global-set-key (kbd "C-c <tab>") #'my/cleanup-buffer)
@@ -46,7 +48,8 @@
 
 ;; Hide/show element
 (global-set-key (kbd "s-.") 'hs-toggle-hiding)
-(global-set-key (kbd "s->") 'my/hs-toggle-all)
+(global-set-key (kbd "s->") 'hs-show-all)
+(global-set-key (kbd "s-<") 'hs-hide-all)
 
 ;; Add empty lines above/below (like vim-unimpared's "[-SPC" and "]-SPC")
 (global-set-key (kbd "C-c C-SPC") #'my/insert-line-above)
@@ -70,11 +73,14 @@
 ;; Find file at point
 (global-set-key (kbd "C-c C-f") 'find-file-at-point)
 
-;; Find other file, e.g. accompanying test file.
-;; Note: the different file pairs must be configured in the
-;; mode local `ff-other-file-alist' variable, which can
-;; be configured in a major mode hook. See example in `setup-web'.
-(global-set-key (kbd "s-t") 'ff-find-other-file)
+;; Save project buffers
+(global-set-key (kbd "C-x p s") (lambda ()
+                                  (interactive)
+                                  (save-some-buffers t 'save-some-buffers-root)))
+
+;; Jump to related file, e.g. between src and test files.
+;; The file pairings are configured per mode. See example in `setup-clojure'.
+(global-set-key (kbd "s-t") 'significant-other-jump)
 
 ;; Toggle menu bar
 (global-set-key (kbd "M-<f1>") 'menu-bar-mode)
@@ -91,8 +97,13 @@
 (global-set-key (kbd "M-l") 'downcase-dwim)
 (global-set-key (kbd "M-u") 'upcase-dwim)
 
+;; Selection / subword mode
+(global-set-key (kbd "<f10>") 'global-subword-mode)
+(global-set-key (kbd "<f11>") 'global-display-line-numbers-mode)
+
 ;; Documentation
 (global-set-key (kbd "s-i") 'eldoc)
+(global-set-key (kbd "M-i") 'eldoc-box-help-at-point)
 
 ;; Imenu replacement
 (global-set-key (kbd "C-,") 'breadcrumb-jump)
@@ -105,6 +116,17 @@
 (global-set-key (kbd "s-=") 'my/inc-font-size)
 (global-set-key (kbd "s--") 'my/dec-font-size)
 (global-set-key (kbd "s-0") 'my/reset-font-size)
+
+;; Toggle theme
+(global-set-key (kbd "<f12>") 'modus-themes-toggle)
+
+;; Org
+(global-set-key (kbd "s-c") 'org-capture)
+(global-set-key (kbd "s-a") 'org-agenda)
+
+;; Numbers
+(global-set-key (kbd "C-c -") 'dec-number-at-point)
+(global-set-key (kbd "C-c =") 'inc-number-at-point)
 
 (defun my/change-font-size (step)
   (custom-set-faces `(default ((t (:height ,(+ (face-attribute 'default :height) step)))))))
@@ -148,7 +170,7 @@
 
 (defun my/cleanup-buffer ()
   (interactive)
-  (save-excursion (beginning-of-buffer)
+  (save-excursion (mark-whole-buffer)
                   (crux-cleanup-buffer-or-region)))
 
 (defun my/move-line-up ()
@@ -216,13 +238,43 @@
       (set-register ?w (current-window-configuration))
       (delete-other-windows))))
 
-(defvar my/hs-all-hidden nil)
+;; Source: https://github.com/magnars/emacsd-reboot
+(defun incs (s &optional num)
+  (let* ((inc (or num 1))
+         (new-number (number-to-string (+ inc (string-to-number s))))
+         (zero-padded? (s-starts-with? "0" s)))
+    (if zero-padded?
+        (s-pad-left (length s) "0" new-number)
+      new-number)))
 
-(defun my/hs-toggle-all ()
+(defun goto-closest-number ()
   (interactive)
-  (setq my/hs-all-hidden (not my/hs-all-hidden))
-  (if my/hs-all-hidden
-      (hs-hide-all)
-    (hs-show-all)))
+  (let ((closest-behind (save-excursion (search-backward-regexp "[0-9]" nil t)))
+        (closest-ahead (save-excursion (search-forward-regexp "[0-9]" nil t))))
+    (push-mark)
+    (goto-char
+     (cond
+      ((and (not closest-ahead) (not closest-behind)) (error "No numbers in buffer"))
+      ((and closest-ahead (not closest-behind)) closest-ahead)
+      ((and closest-behind (not closest-ahead)) closest-behind)
+      ((> (- closest-ahead (point)) (- (point) closest-behind)) closest-behind)
+      ((> (- (point) closest-behind) (- closest-ahead (point))) closest-ahead)
+      :else closest-ahead))))
+
+(defun inc-number-at-point (arg)
+  (interactive "p")
+  (unless (or (looking-at "[0-9]")
+              (looking-back "[0-9]"))
+    (goto-closest-number))
+  (save-excursion
+    (while (looking-back "[0-9]")
+      (forward-char -1))
+    (re-search-forward "[0-9]+" nil)
+    (replace-match (incs (match-string 0) arg) nil nil)))
+
+(defun dec-number-at-point (arg)
+  (interactive "p")
+  (inc-number-at-point (- arg)))
+
 
 (provide 'setup-keybindings)

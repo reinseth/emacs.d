@@ -12,7 +12,7 @@
   (vertico-mode)
   :bind
   (:map vertico-map
-        ("s-RET" . embark-export)))
+        ("s-<return>" . embark-export)))
 
 (use-package vertico-directory
   :after vertico
@@ -39,6 +39,7 @@
   :ensure t
   :init
   (global-corfu-mode)
+  (corfu-popupinfo-mode)
   :config
   (setq corfu-auto-prefix 2)
   (setq corfu-auto nil)
@@ -46,7 +47,8 @@
   (setq corfu-quit-at-boundary nil)
   :bind (:map corfu-map
               ("TAB" . corfu-complete)
-              ("RET" . corfu-insert)))
+              ("RET" . corfu-insert)
+              ("M-j" . corfu-quick-jump)))
 
 (use-package corfu-popupinfo
   :after corfu
@@ -80,9 +82,6 @@
 (use-package embark
   :ensure t
   :bind (("C-c a" . embark-act)))
-
-(use-package embark-consult
-  :ensure t)
 
 ;; Consult: completion provider for various actions in the minibuffer
 (use-package consult
@@ -118,6 +117,9 @@
   (setq consult-narrow-key "<")
   (setq xref-show-xrefs-function #'consult-xref)
   (setq xref-show-definitions-function #'consult-xref))
+
+(use-package embark-consult
+  :ensure t)
 
 (defun my/orderless-camelcase (component)
   (orderless-regexp (s-join "[a-zA-Z0-9]*" (s-slice-at "[A-Z]" component))))

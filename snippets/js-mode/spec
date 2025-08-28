@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: spec
+# key: spec
+# --
+describe("$1", () => {
+  describe("$2", () => {
+    $0
+  })
+})

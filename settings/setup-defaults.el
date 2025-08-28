@@ -19,6 +19,7 @@
 (use-package exec-path-from-shell
   :ensure t
   :config
+  (setq exec-path-from-shell-arguments nil)
   (exec-path-from-shell-initialize)
 
   ;; See https://emacs-lsp.github.io/lsp-mode/page/performance/#use-plists-for-deserialization
@@ -93,6 +94,9 @@
 (setopt mouse-wheel-tilt-scroll t)
 (setopt mouse-wheel-flip-direction t)
 
+;; Disable annoying mouse highlighting
+(setopt mouse-highlight nil)
+
 ;; Use the minibuffer whilst in the minibuffer
 (setopt enable-recursive-minibuffers t)
 
@@ -111,6 +115,11 @@
 
 ;; No word-wrapping in programming modes
 (add-hook 'prog-mode-hook (lambda () (setq truncate-lines t)))
+
+;; Autospelling and fill mode in text modes
+(add-hook 'text-mode-hook (lambda ()
+                            (auto-fill-mode 1)
+                            (flyspell-mode 1)))
 
 ;; Mac settings
 (when (eq system-type 'darwin)

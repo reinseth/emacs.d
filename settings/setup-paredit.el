@@ -15,12 +15,21 @@
         ("C-c M-[" . paredit-wrap-square)
         ("C-c d" . paredit-duplicate-after-point)
 
-        ;; The default splice/raise keybindings gets in the way of
-        ;; base keybindings. Unbind and bind to something else.
+        ;; Rebind splice - gets in the way of search
         ("M-s" . nil)
-        ("M-r" . nil)
         ("s-s" . paredit-splice-sexp-killing-backward)
-        ("s-r" . paredit-raise-sexp)))
+
+        ;; Rebind raise - gets in the way of cursor positioning
+        ("M-r" . nil)
+        ("s-r" . paredit-raise-sexp)
+
+        ;; Unbind convolute - gets in the way of xref-find-references
+        ("M-?" . nil)
+
+        ;; Unbind paredit new line - gets in the way of my expand-region binding
+        ("C-j" . nil)
+
+        ("M-J" . my/paredit-join-sexps)))
 
 (use-package paredit-menu
   :ensure t
@@ -53,5 +62,13 @@
   (set-mark-command nil)
   (yank)
   (exchange-point-and-mark))
+
+(defun my/paredit-join-sexps ()
+  "Calls the standard paredit-join-sexps function which joins lists and strings.
+If that fails, join the current line with the next line."
+  (interactive)
+  (condition-case err
+      (paredit-join-sexps)
+    (error (crux-top-join-line))))
 
 (provide 'setup-paredit)

@@ -1,8 +1,7 @@
 (use-package magit
   :ensure t
   :bind (("C-x g" . magit-status)
-         ("C-c g" . magit-file-dispatch)
-         ("C-x p s" . magit-save-repository-buffers))
+         ("C-c g" . magit-file-dispatch))
   :config
   (setq magit-section-initial-visibility-alist '((untracked . show)
                                                  (unstaged . show)
@@ -39,6 +38,7 @@
 (defvar magit-jira-task nil)
 
 (defun magit-insert-jira-task ()
+  (interactive)
   (when magit-jira-task
     (unless (save-excursion
               (goto-char (point-min))
@@ -48,6 +48,13 @@
 
 (defun magit-set-jira-task ()
   (interactive)
-  (setq magit-jira-task (read-string "Jira task: " magit-jira-task)))
+  (setq magit-jira-task (read-string "Jira task: " magit-jira-task))
+  (when (is-commit-message-buffer?)
+    (magit-insert-jira-task)))
+
+;; Copied from https://github.com/magnars/emacsd-reboot/blob/d53c6493d16125eef89c36d6409ee43163cf9c51/packages/setup-magit.el
+(defun is-commit-message-buffer? ()
+  (when (buffer-file-name)
+    (equal (file-name-base (buffer-file-name)) "COMMIT_EDITMSG")))
 
 (provide 'setup-git)
