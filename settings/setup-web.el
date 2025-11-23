@@ -79,7 +79,11 @@
   (flymake-eslint-enable)
   (eglot--code-action eglot-ts-code-action-organize-imports "source.removeUnusedImports")
   (eglot-ensure)
-  (keymap-set mode-map "<remap> <eglot-code-action-organize-imports>" 'eglot-ts-code-action-organize-imports))
+  (keymap-set mode-map "<remap> <eglot-code-action-organize-imports>" 'eglot-ts-code-action-organize-imports)
+  (keymap-set mode-map (kbd "\"") 'my/double-quotes)
+  (keymap-set mode-map (kbd "'") 'my/single-quotes)
+  (keymap-set mode-map (kbd "`") 'my/backtick-quotes)
+  (keymap-set mode-map "C-c w" 'my/wrap-jsx-element))
 
 (defun my/setup-js-mode ()
   (my/setup-ts-base js-ts-mode-map))
@@ -116,5 +120,44 @@
 (add-hook 'js-json-mode-hook #'my/setup-json-mode)
 (add-hook 'js-ts-mode-hook #'my/setup-js-mode)
 (add-hook 'typescript-ts-mode-hook #'my/setup-ts-mode)
+
+(defun my/quoted-region-active-p (new-quote-char)
+  (interactive)
+  (when (use-region-p)
+    (let* ((start (region-beginning))
+           (end (region-end))
+           (start-char (buffer-substring-no-properties start (+ start 1)))
+           (end-char (buffer-substring-no-properties (- end 1) end)))
+      (and (string= start-char end-char)
+           (string-match-p "[\"'`]" start-char)
+           (not (string= start-char new-quote-char))))))
+
+(defun my/replace-region-quotes (char)
+  (interactive)
+  (if (my/quoted-region-active-p char)
+      (save-excursion
+        (goto-char (region-beginning))
+        (delete-char 1)
+        (insert char)
+        (goto-char (- (region-end) 1))
+        (delete-char 1)
+        (insert char))
+    (self-insert-command 1 (aref char 0))))
+
+(defun my/double-quotes ()
+  (interactive)
+  (my/replace-region-quotes "\""))
+
+(defun my/single-quotes ()
+  (interactive)
+  (my/replace-region-quotes "'"))
+
+(defun my/backtick-quotes ()
+  (interactive)
+  (my/replace-region-quotes "`"))
+
+(defun my/wrap-jsx-element ()
+  (interactive)
+  (jtsx-wrap-in-jsx-element ""))
 
 (provide 'setup-web)
