@@ -21,7 +21,8 @@
 
 (use-package goto-chg
   :ensure t
-  :bind ("M-`" . goto-last-change))
+  :bind (("M-S-<backspace>" . goto-last-change)
+         ("M-`" . goto-last-change)))
 
 ;; Avy: quickly jump to char sequence anywhere on the visible screen
 ;; Especially useful for jumping to entries matched by C-s (isearch)
@@ -46,7 +47,10 @@
   :bind (("s-j" . mc/mark-next-like-this)
          ("S-s-j" . mc/skip-to-next-like-this)
          ("M-s-j" . mc/mark-all-dwim)
-         ("C-S-c C-S-c" . mc/edit-lines))
+         ("C-S-c C-S-c" . mc/edit-lines)
+         :map
+         mc/keymap
+         ("M-<return>" . newline))
   :config
   (multiple-cursors-mode 1)
   (setq mc/insert-numbers-default 1))
@@ -56,10 +60,6 @@
   :ensure t
   :config
   (whole-line-or-region-global-mode 1))
-
-(use-package embrace
-  :ensure t
-  :bind (("s-\`" . embrace-commander)))
 
 (use-package surround
   :ensure t
