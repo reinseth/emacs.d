@@ -23,6 +23,7 @@
 (require 'setup-clojure)
 (require 'setup-combobulate)
 (require 'setup-dired)
+(require 'setup-ediff)
 (require 'setup-editorconfig)
 (require 'setup-eglot)
 (require 'setup-eldoc)
