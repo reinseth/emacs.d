@@ -40,5 +40,6 @@
 (require 'setup-scratch)
 (require 'setup-olivetti)
 (require 'setup-significant-other)
+(require 'setup-string-inflection)
 (require 'setup-treesitter)
 (require 'setup-web)
