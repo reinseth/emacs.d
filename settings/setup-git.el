@@ -8,6 +8,7 @@
                                                  (unpushed . show)
                                                  (unpulled . show)
                                                  (stashes . hide)))
+  (setq magit-status-margin magit-log-margin)
   (setq magit-save-repository-buffers 'dontask)
   (setq magit-display-buffer-function 'magit-display-buffer-fullframe-status-topleft-v1)
   (setq magit-bury-buffer-function 'magit-restore-window-configuration)
@@ -34,6 +35,30 @@
 (use-package git-timemachine
   :ensure t
   :bind (("C-x v t" . git-timemachine)))
+
+;; Copied/modified from https://github.com/magnars/emacsd-reboot/blob/main/packages/setup-magit.el
+(defun b-a-r-k-commit ()
+  (interactive)
+  (if-let (commit (magit-commit-at-point))
+      (kill-new (browse-at-remote--commit-url commit))
+    (browse-at-remote-kill))
+  (message "Remote was killed 💀"))
+
+;; Copied from https://github.com/magnars/emacsd-reboot/blob/main/packages/setup-magit.el
+(defun b-a-r-k-branch ()
+  (interactive)
+  (setq browse-at-remote-prefer-symbolic t)
+  (browse-at-remote-kill)
+  (setq browse-at-remote-prefer-symbolic nil)
+  (message "Remote was killed 🪓🪵"))
+
+;; Copied from https://github.com/magnars/emacsd-reboot/blob/main/packages/setup-magit.el
+(use-package browse-at-remote
+  :ensure t
+  :custom
+  (browser-at-remote-prefer-symbolic nil)
+  :bind (("C-x v w" . b-a-r-k-commit)
+         ("C-x v W" . b-a-r-k-branch)))
 
 (defvar magit-jira-task nil)
 
