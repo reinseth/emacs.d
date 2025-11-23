@@ -16,6 +16,7 @@
         combobulate-maybe-insert-attribute
         combobulate-navigate-down
         combobulate-navigate-up
+        combobulate-splice-self
         combobulate-splice-up
         combobulate-tsx-envelope-wrap-parentheses
         combobulate-typescript-envelope-wrap-parentheses
@@ -53,7 +54,9 @@
         mc/mark-previous-lines
         mc/skip-next-like-this
         my-insert-recangle-push-lines
+        my/double-quotes
         my/kill-region-or-backward-word
+        my/single-quotes
         org-cycle
         org-delete-char
         org-end-of-line
@@ -100,7 +103,9 @@
         consult-buffer
         describe-key
         electric-pair-delete-pair
+        eyebrowse-switch-to-window-config-9
         global-subword-mode
+        goto-last-change
         lsp-signature-stop
         mc--insert-number-and-increase
         mc/skip-top-next-like-this
@@ -112,5 +117,6 @@
         pixel-scroll-precision
         redraw-display
         wgrep-finish-edit
+        where-is
         yank-rectangle
         ))
