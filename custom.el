@@ -35,6 +35,7 @@
                 markdown-mode olivetti orderless paredit-menu
                 racket-mode rg scratch sicp tagedit undo-fu vc-msg
                 vertico vite-test-mode vundo whole-line-or-region))
+ '(safe-local-variable-values '((cider-preferred-build-tool . "clojure-cli")))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
