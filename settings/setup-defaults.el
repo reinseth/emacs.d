@@ -113,6 +113,9 @@
 ;; Subword mode everywhere
 (global-subword-mode 1)
 
+;; Run as a server so that emacsclient can be used from the outside to open files
+(server-mode)
+
 ;; No word-wrapping in programming modes
 (add-hook 'prog-mode-hook (lambda () (setq truncate-lines t)))
 
