@@ -14,11 +14,6 @@
 ;; Complement to transpose-sexps (C-M-t)
 (global-set-key (kbd "C-M-y") #'my/reverse-transpose-sexps)
 
-;; Contract selection marked with mark-sexp
-(global-set-key (kbd "C-S-M-SPC") (lambda ()
-                                    (interactive)
-                                    (mark-sexp -1 t)))
-
 ;; Smarter move to beginning of line
 (global-set-key (kbd "C-a") #'crux-move-beginning-of-line)
 
@@ -58,6 +53,11 @@
 ;; Mark word using M-S-SPC, which is a lot easier thant M-@
 ;; (and mark-sexp is C-M-@ and C-M-SPC)
 (global-set-key (kbd "M-S-SPC") 'mark-word)
+
+;; Contract selection marked with mark-sexp
+(global-set-key (kbd "C-S-M-SPC") (lambda ()
+                                    (interactive)
+                                    (mark-sexp -1 t)))
 
 ;; Rebind cycle-spacing from M-SPC to s-SPC, leaving room for autcomplete
 (global-set-key (kbd "s-SPC") 'cycle-spacing)
@@ -127,6 +127,13 @@
 ;; Numbers
 (global-set-key (kbd "C-c -") 'dec-number-at-point)
 (global-set-key (kbd "C-c =") 'inc-number-at-point)
+
+;; Scratch buffers
+(global-unset-key (kbd "s-q")) ;; don't want to quit emacs
+(global-set-key (kbd "s-q q") 'open-scratch-buffer)
+(global-set-key (kbd "s-q s-q") 'open-scratch-buffer)
+(global-set-key (kbd "s-q n") 'new-scratch-buffer)
+(global-set-key (kbd "s-q s-n") 'new-scratch-buffer)
 
 (defun my/change-font-size (step)
   (custom-set-faces `(default ((t (:height ,(+ (face-attribute 'default :height) step)))))))
@@ -275,6 +282,5 @@
 (defun dec-number-at-point (arg)
   (interactive "p")
   (inc-number-at-point (- arg)))
-
 
 (provide 'setup-keybindings)
