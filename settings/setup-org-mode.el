@@ -1,13 +1,15 @@
 (use-package org
+  :bind (:map org-mode-map
+              ("C-j" . nil))
   :config
   (setq org-capture-templates
         '(("d" "Dagbok" entry (file+datetree "~/org/dagbok.org")
-           "* %? \n  %i"
+           "* %? \n %i "
            :jump-to-captured t)
           ("b" "Bøker" entry (file+headline "~/org/lister.org" "Bøker")
-           "* %?\n %i\n %a")
+           "* %?\n %i\n")
           ("l" "Blogger / Videoer" entry (file+headline "~/org/lister.org" "Blogger / Videoer")
-           "* %?\n %i\n %a")
+           "* %?\n %i\n")
           ("f" "Filmer" entry (file+headline "~/org/lister.org" "Filmer"))
           ("s" "Serier" entry (file+headline "~/org/lister.org" "Serier"))
           ("p" "Programmering" entry (file+headline "~/org/lister.org" "Programmering"))
