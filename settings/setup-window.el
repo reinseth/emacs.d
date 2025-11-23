@@ -7,15 +7,29 @@
 ;; Enhanced window navigation
 (use-package ace-window
   :ensure t
-  :bind (("M-O" . ace-window)
-         ("M-o" . aw-flip-window))
-  :config
-  (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
+  :bind (("M-o" . ace-window)
+         ("M-O" . aw-flip-window))
+  :custom
+  (aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+  (aw-dispatch-always t)
+  (aw-dispatch-alist
+   '((?x aw-delete-window "Delete Window")
+     (?m aw-swap-window "Swap Windows")
+     (?M aw-move-window "Move Window")
+     (?c aw-copy-window "Copy Window")
+     (?n aw-flip-window)
+     (?u aw-switch-buffer-other-window "Switch Buffer Other Window")
+     (?e aw-execute-command-other-window "Execute Command Other Window")
+     (?v aw-split-window-vert "Split Vert Window")
+     (?b aw-split-window-horz "Split Horz Window")
+     (?o delete-other-windows "Delete Other Windows")
+     (?? aw-show-dispatch-help))))
 
 ;; Window navigation using super+arrow
 (use-package windmove
   :config
-  (windmove-default-keybindings 'super))
+  (windmove-default-keybindings 'super)
+  (windmove-swap-states-default-keybindings))
 
 ;; Undo/redo window changes with C-c <left> / C-c <right>
 (use-package winner
