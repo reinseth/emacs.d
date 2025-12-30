@@ -45,7 +45,7 @@
 (use-package multiple-cursors
   :ensure t
   :bind (("s-j" . mc/mark-next-like-this)
-         ("S-s-j" . mc/skip-to-next-like-this)
+         ("s-J" . mc/skip-to-next-like-this)
          ("M-s-j" . mc/mark-all-dwim)
          ("C-S-c C-S-c" . mc/edit-lines)
          :map

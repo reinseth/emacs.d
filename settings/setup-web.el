@@ -1,5 +1,3 @@
-(save-some-buffers-root)
-
 (use-package sgml-mode
   :hook (sgml-mode . my/setup-html-mode))
 
