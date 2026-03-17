@@ -58,17 +58,21 @@
 (defadvice load-theme (after theme-save-to-custom activate)
   (custom-theme-save))
 
-(use-package doom-themes
-  :defer t)
-
 (use-package ef-themes
-  :defer t)
+  :straight (:type git :host github :repo "protesilaos/ef-themes"))
+
+(use-package standard-themes
+  :straight (:type git :host github :repo "protesilaos/standard-themes"))
 
 (use-package doom-modeline
   :ensure t
   :config
-  (setq doom-modeline-icon nil)
+  (setq doom-modeline-icon t)
+  (setq doom-modeline-buffer-file-name-style 'file-name)
   (doom-modeline-mode 1))
+
+(use-package nerd-icons
+  :ensure t)
 
 (use-package hl-todo
   :ensure t

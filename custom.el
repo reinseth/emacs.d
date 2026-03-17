@@ -7,7 +7,11 @@
  '(column-number-mode t)
  '(custom-enabled-themes '(modus-vivendi-tinted))
  '(custom-safe-themes
-   '("c038d994d271ebf2d50fa76db7ed0f288f17b9ad01b425efec09519fa873af53"
+   '("d5360e920c75a6453880369c48e375a0b46e5e6f034d21cde1e6251c519eebdb"
+     "dde7fb0b1ed1bb5b61e62bf1a00696cf099a2b290718aee9b377365b3ed992f0"
+     "21c4c4b7d3ab161aaa28b15ca846854d395c33cfb7c6863ab601adfe10d70ce0"
+     "ea4dd126d72d30805c083421a50544e235176d9698c8c541b824b60912275ba1"
+     "c038d994d271ebf2d50fa76db7ed0f288f17b9ad01b425efec09519fa873af53"
      "211621592803ada9c81ec8f8ba0659df185f9dc06183fcd0e40fbf646c995f23"
      "a0e9bc5696ce581f09f7f3e7228b949988d76da5a8376e1f2da39d1d026af386"
      "90185f1d8362727f2aeac7a3d67d3aec789f55c10bb47dada4eefb2e14aa5d01"
@@ -28,8 +32,8 @@
    '(ace-window add-node-modules-path apheleia balanced-windows breadcrumb
                 cape clj-refactor clojure-mode-extra-font-locking
                 consult-eglot corfu-terminal crux diff-hl diminish
-                doom-modeline elfeed elfeed-org embark-consult embrace
-                emmet-mode exec-path-from-shell eyebrowse flymake-eslint
+                elfeed elfeed-org embark-consult embrace emmet-mode
+                exec-path-from-shell eyebrowse flymake-eslint
                 flymake-kondor git-timemachine goto-chg gptel hl-todo
                 jtsx kaocha-runner kind-icon lua-mode magit marginalia
                 markdown-mode olivetti orderless paredit-menu

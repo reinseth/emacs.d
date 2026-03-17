@@ -1,6 +1,7 @@
-(require-theme 'modus-themes)
+;; (require-theme 'modus-themes)
 
 (use-package modus-themes
+  :straight (:type git :host github :repo "protesilaos/modus-themes")
   :hook (modus-themes-after-load-theme-hook . my/org-modus-customization)
   :config
   (setopt modus-themes-common-palette-overrides

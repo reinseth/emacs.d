@@ -4,6 +4,7 @@
 (setq settings-dir (expand-file-name "settings" user-emacs-directory))
 (add-to-list 'load-path settings-dir)
 
+(require 'setup-straight)
 (require 'setup-modus-themes)
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
@@ -16,7 +17,6 @@
 (require 'setup-keybindings)
 (require 'setup-search-replace)
 (require 'setup-window)
-(require 'setup-straight)
 
 (require 'setup-apheleia)
 (require 'setup-breadcrumb-mode)
