@@ -1,8 +1,16 @@
 ;; Keep splits balanced
-(use-package balanced-windows
-  :ensure t
-  :config
-  (balanced-windows-mode 1))
+;;
+;; balance-windows-mode has an issue that the which-key popover gets squeezed,
+;; making it overflow (effectively hiding information).
+;;
+;; The following post has a comment at the end about setting the window-combination-resize
+;; variable (builtin), which will do pretty much the same as balance-windows:
+;; https://zck.org/balance-emacs-windows for alternative to balance
+(setq window-combination-resize t)
+;; (use-package balanced-windows
+;;   :ensure t
+;;   :config
+;;   (balanced-windows-mode 1))
 
 ;; Enhanced window navigation
 (use-package ace-window
@@ -66,7 +74,7 @@
 
 ;; Window layout configuration
 (setq display-buffer-alist
-      '(("\\*Help\\*\\|\\*Apropos\\*\\|\\*Warnings\\*\\|\\*eldoc\\*"
+      '(("\\*Help\\*\\|\\*Apropos\\*\\|\\*Warnings\\*\\|\\*eldoc"
          (display-buffer-reuse-window
           display-buffer-below-selected)
          (window-height . my/fit-window-or-max-half)
