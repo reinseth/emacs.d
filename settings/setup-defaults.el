@@ -56,6 +56,9 @@
         `((".*" ,(file-name-as-directory my-autosave-dir) t))))
 
 
+;; Autosaves buffers on compile
+(setq compilation-ask-about-save nil)
+
 ;; Changes all yes/no questions to y/n
 (defalias 'yes-or-no-p 'y-or-n-p)
 
