@@ -32,15 +32,19 @@
   :config
   (add-hook 'tsx-ts-mode-hook #'my/setup-tsx-mode))
 
-(straight-use-package
- '(vite-test-mode
-   :type git
-   :host github
-   :repo "chrishowejones/vite-test-mode"))
+(use-package vite-test-mode
+  :straight (vite-test-mode
+             :type git
+             :host github
+             :repo "chrishowejones/vite-test-mode")
+  :bind (:map vite-test-mode-map
+              ;; Complements s-t for switching between test and subject
+              ("s-T" . vite-test-run)))
 
 (defun my/setup-html-mode ()
   (sgml-electric-tag-pair-mode 1)
-  (apheleia-mode 1))
+  (apheleia-mode 1)
+  (combobulate-mode 1))
 
 (defun my/setup-json-mode ()
   (setq js-indent-level 2)
@@ -52,6 +56,7 @@
   (setq css-indent-offset 2)
   (electric-indent-mode 1)
   (apheleia-mode 1)
+  (combobulate-mode 1)
   (eglot-ensure))
 
 (defun my/setup-ts-base (mode-map)
@@ -73,6 +78,7 @@
   (apheleia-mode 1)
   (vite-test-mode 1)
   (breadcrumb-local-mode 1)
+  (combobulate-mode 1)
   (add-node-modules-path)
   (flymake-eslint-enable)
   (eglot--code-action eglot-ts-code-action-organize-imports "source.removeUnusedImports")
@@ -81,7 +87,8 @@
   (keymap-set mode-map (kbd "\"") 'my/double-quotes)
   (keymap-set mode-map (kbd "'") 'my/single-quotes)
   (keymap-set mode-map (kbd "`") 'my/backtick-quotes)
-  (keymap-set mode-map "C-c w" 'my/wrap-jsx-element))
+  (keymap-set mode-map "C-c w" 'my/wrap-jsx-element)
+  (keymap-set mode-map "C-c d" 'combobulate-clone-node-dwim))
 
 (defun my/setup-js-mode ()
   (my/setup-ts-base js-ts-mode-map))
@@ -100,6 +107,8 @@
   (setq-local forward-sexp-function 'jtsx-forward-sexp)
   (keymap-local-set "<remap> <comment-dwim>" 'jtsx-comment-dwim)
   (keymap-local-set "<remap> <comment-line>" 'jtsx-comment-line)
+  (keymap-local-set "M-P" 'jtsx-move-jsx-element-backward)
+  (keymap-local-set "M-N" 'jtsx-move-jsx-element-forward)
   (add-hook 'pre-command-hook 'jtsx-save-buffer-chars-modified-tick nil t)
   (add-hook 'post-command-hook 'jtsx-synchronize-jsx-element-tags -1 t)
   (add-to-list 'hs-special-modes-alist
