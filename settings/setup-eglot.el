@@ -6,6 +6,9 @@
         ("s-l o" . eglot-code-action-organize-imports)
         ("M-s M-o" . consult-eglot-symbols))
   :config
+  ;; Don't want the default margin setting, which makes the line height grow, even if it doesn't show anything
+  (setq eglot-code-action-indications '(eldoc-hint))
+
   ;; The following is necessary to get flymake-eslint to work with eglot
   ;; See https://github.com/joaotavora/eglot/issues/268
   (setq eglot-stay-out-of '(flymake))
