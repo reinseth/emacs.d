@@ -11,11 +11,17 @@
 ;; Kill whole line
 (global-set-key (kbd "C-S-k") #'crux-kill-whole-line)
 
+;; Zap up to char
+(global-set-key (kbd "s-d") 'zap-up-to-char)
+
 ;; Complement to transpose-sexps (C-M-t)
 (global-set-key (kbd "C-M-y") #'my/reverse-transpose-sexps)
 
 ;; Smarter move to beginning of line
 (global-set-key (kbd "C-a") #'crux-move-beginning-of-line)
+
+;; Forward to the beginning of the next word
+(global-set-key (kbd "M-F") 'forward-to-word)
 
 ;; Move lines up and down
 (global-set-key (kbd "C-S-<up>") #'my/move-line-up)
@@ -65,7 +71,6 @@
 ;; Autocomplete
 (global-set-key (kbd "M-SPC") 'completion-at-point)
 (global-set-key (kbd "M-/") 'hippie-expand-no-case-fold)
-(global-set-key (kbd "C-M-/") 'hippie-expand-lines)
 
 ;; Reveal file in dired
 (global-set-key (kbd "C-x C-j") 'dired-jump)
@@ -74,9 +79,11 @@
 (global-set-key (kbd "C-c C-f") 'find-file-at-point)
 
 ;; Save project buffers
-(global-set-key (kbd "C-x p s") (lambda ()
-                                  (interactive)
-                                  (save-some-buffers t 'save-some-buffers-root)))
+(defun save-project-buffers ()
+  (interactive)
+  (save-some-buffers t 'save-some-buffers-root))
+
+(global-set-key (kbd "C-x p s") 'save-project-buffers)
 
 ;; Jump to related file, e.g. between src and test files.
 ;; The file pairings are configured per mode. See example in `setup-clojure'.
