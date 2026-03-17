@@ -127,9 +127,8 @@
 ;; No word-wrapping in programming modes
 (add-hook 'prog-mode-hook (lambda () (setq truncate-lines t)))
 
-;; Autospelling and fill mode in text modes
+;; Autospelling in text modes
 (add-hook 'text-mode-hook (lambda ()
-                            (auto-fill-mode 1)
                             (flyspell-mode 1)))
 
 ;; Mac settings
