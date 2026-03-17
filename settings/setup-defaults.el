@@ -97,6 +97,11 @@
 (setopt mouse-wheel-tilt-scroll t)
 (setopt mouse-wheel-flip-direction t)
 
+;; Disable mouse/trackpad font resizing
+(global-set-key (kbd "<pinch>") 'ignore)
+(global-set-key (kbd "<C-wheel-up>") 'ignore)
+(global-set-key (kbd "<C-wheel-down>") 'ignore)
+
 ;; Disable annoying mouse highlighting
 (setopt mouse-highlight nil)
 
