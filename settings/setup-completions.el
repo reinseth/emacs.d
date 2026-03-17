@@ -12,7 +12,8 @@
   (vertico-mode)
   :bind
   (:map vertico-map
-        ("s-<return>" . embark-export)))
+        ("s-<return>" . embark-export)
+        ("M-<return>" . embark-act)))
 
 (use-package vertico-directory
   :after vertico
